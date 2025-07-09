@@ -367,52 +367,39 @@ function sortTable(column, table_name = "content_table") {
   return
 }
 
-function createSearchObj() {
+function createSearchObj(): void {
+    if (!SERVER["xepg"] || !SERVER["xepg"]["epgMapping"]) {
+        return;
+    }
+    SEARCH_MAPPING = new Object();
+    var data: {} = SERVER["xepg"]["epgMapping"];
+    var channels: string[] = getObjKeys(data);
+    var channelKeys: string[] = ["x-active", "x-channelID", "x-name", "_file.m3u.name", "x-group-title", "x-xmltv-file"];
 
-  SEARCH_MAPPING = new Object()
-  var data = SERVER["xepg"]["epgMapping"]
-  var channels = getObjKeys(data)
-
-  var channelKeys: string[] = ["x-active", "x-channelID", "x-name", "_file.m3u.name", "x-group-title", "x-xmltv-file"]
-
-  channels.forEach(id => {
-
-    channelKeys.forEach(key => {
-
-      if (key == "x-active") {
-
-        switch (data[id][key]) {
-          case true:
-            SEARCH_MAPPING[id] = "online "
-            break;
-
-          case false:
-            SEARCH_MAPPING[id] = "offline "
-            break;
-
-        }
-
-      } else {
-
-        if (key == "x-xmltv-file") {
-          var xmltvFile = getValueFromProviderFile(data[id][key], "xmltv", "name")
-
-          if (xmltvFile != undefined) {
-            SEARCH_MAPPING[id] = SEARCH_MAPPING[id] + xmltvFile + " "
-          }
-
-        } else {
-          SEARCH_MAPPING[id] = SEARCH_MAPPING[id] + data[id][key] + " "
-        }
-
-
-      }
-
-    })
-
-  })
-
-  return
+    channels.forEach(id => {
+        channelKeys.forEach(key => {
+            if (key == "x-active") {
+                switch (data[id][key]) {
+                    case true:
+                        SEARCH_MAPPING[id] = "online ";
+                        break;
+                    case false:
+                        SEARCH_MAPPING[id] = "offline ";
+                        break;
+                }
+            } else {
+                if (key == "x-xmltv-file") {
+                    var xmltvFile: string = getValueFromProviderFile(data[id][key], "xmltv", "name");
+                    if (xmltvFile != undefined) {
+                        SEARCH_MAPPING[id] = SEARCH_MAPPING[id] + xmltvFile + " ";
+                    }
+                } else {
+                    SEARCH_MAPPING[id] = SEARCH_MAPPING[id] + data[id][key] + " ";
+                }
+            }
+        });
+    });
+    return;
 }
 
 function enableGroupSelection(selector) {
@@ -730,23 +717,22 @@ function probeChannel(url: string) {
   return
 }
 
-function checkUndo(key: string) {
-
-  switch (key) {
-    case "epgMapping":
-      if (UNDO.hasOwnProperty(key)) {
-        SERVER["xepg"][key] = JSON.parse(JSON.stringify(UNDO[key]))
-      } else {
-        UNDO[key] = JSON.parse(JSON.stringify(SERVER["xepg"][key]));
-      }
-      break;
-
-    default:
-
-      break;
-  }
-
-  return
+function checkUndo(key: string): void {
+    switch (key) {
+        case "epgMapping":
+            if (!SERVER["xepg"] || !SERVER["xepg"]["epgMapping"]) {
+                return;
+            }
+            if (UNDO.hasOwnProperty(key)) {
+                SERVER["xepg"][key] = JSON.parse(JSON.stringify(UNDO[key]));
+            } else {
+                UNDO[key] = JSON.parse(JSON.stringify(SERVER["xepg"][key]));
+            }
+            break;
+        default:
+            break;
+    }
+    return;
 }
 
 function sortSelect(elem) {
