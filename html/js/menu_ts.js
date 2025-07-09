@@ -328,13 +328,16 @@ class Content {
                 });
                 break;
             case "mapping":
+                if (!SERVER["xepg"] || !SERVER["xepg"]["epgMapping"]) {
+                    return new Array();
+                }
                 BULK_EDIT = false;
                 createSearchObj();
                 checkUndo("epgMapping");
                 console.log("MAPPING");
                 data = SERVER["xepg"]["epgMapping"];
-                var keys = getObjKeys(data);
-                keys.forEach(key => {
+                var mappingKeys = getObjKeys(data);
+                mappingKeys.forEach(key => {
                     if (data[key]["x-active"]) {
                         var tr = document.createElement("TR");
                         tr.id = key;
@@ -446,13 +449,16 @@ class Content {
         var rows = new Array();
         switch (menuKey) {
             case "mapping":
+                if (!SERVER["xepg"] || !SERVER["xepg"]["epgMapping"]) {
+                    return new Array();
+                }
                 BULK_EDIT = false;
-                createSearchObj();
-                checkUndo("epgMapping");
-                console.log("MAPPING");
+                // createSearchObj();
+                // checkUndo("epgMapping");
+                console.log("INACTIVE MAPPING");
                 data = SERVER["xepg"]["epgMapping"];
-                var keys = getObjKeys(data);
-                keys.forEach(key => {
+                var inactiveMappingKeys = getObjKeys(data);
+                inactiveMappingKeys.forEach(key => {
                     if (data[key]["x-active"] === false) {
                         var tr = document.createElement("TR");
                         tr.id = key;

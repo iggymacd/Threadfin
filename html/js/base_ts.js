@@ -275,6 +275,9 @@ function sortTable(column, table_name = "content_table") {
     return;
 }
 function createSearchObj() {
+    if (!SERVER["xepg"] || !SERVER["xepg"]["epgMapping"]) {
+        return;
+    }
     SEARCH_MAPPING = new Object();
     var data = SERVER["xepg"]["epgMapping"];
     var channels = getObjKeys(data);
@@ -541,6 +544,9 @@ function probeChannel(url) {
 function checkUndo(key) {
     switch (key) {
         case "epgMapping":
+            if (!SERVER["xepg"] || !SERVER["xepg"]["epgMapping"]) {
+                return;
+            }
             if (UNDO.hasOwnProperty(key)) {
                 SERVER["xepg"][key] = JSON.parse(JSON.stringify(UNDO[key]));
             }
