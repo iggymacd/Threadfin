@@ -6,7 +6,43 @@
 # Threadfin
 ## M3U Proxy for Plex DVR and Emby/Jellyfin Live TV. Based on xTeVe.
 
-You can follow the old xTeVe documentation for now until I update it for Threadfin. Documentation for setup and configuration is [here](https://github.com/xteve-project/xTeVe-Documentation/blob/master/en/configuration.md).
+## Overview
+
+Threadfin helps you bridge the gap between your IPTV providers and your home media server. Many IPTV services provide access to live TV channels via M3U playlist files and XMLTV for EPG data. However, media servers like Plex, Emby, or Jellyfin may have limitations in how they handle these sources directly, or you might have multiple IPTV subscriptions that you want to manage centrally.
+
+**What problem does it solve?**
+Threadfin simplifies the management of IPTV streams by:
+- Allowing you to add multiple M3U playlists and XMLTV EPG sources.
+- Providing tools to filter, map, and reorder channels.
+- Generating a unified, clean M3U playlist and EPG for your media server.
+- Offering a buffer to improve stream stability and reduce issues for media servers that are sensitive to stream interruptions.
+
+**What is a realistic use case?**
+Imagine you subscribe to two different IPTV services to get a wide range of channels. Instead of struggling to manage two separate M3U files and EPGs in Plex, you can add both sources to Threadfin. Threadfin then lets you pick the channels you want, assign consistent channel numbers, and provides a single M3U and EPG link for Plex. This means a smoother setup and a more reliable Live TV experience.
+
+**When do you need this tool?**
+- You use Plex, Emby, or Jellyfin for Live TV and your IPTV provider uses M3U playlists.
+- Your media server has trouble with your provider's M3U or EPG format.
+- You want to combine channels from multiple IPTV providers.
+- You need to filter out unwanted channels or customize channel names and numbers.
+- You want a more stable streaming experience by using a buffer.
+
+**What is the experience without this tool?**
+Without Threadfin (or a similar tool), you might face:
+- Difficulty loading M3U playlists directly into your media server.
+- Incomplete or inaccurate EPG data.
+- Manually editing M3U files, which can be tedious and error-prone.
+- Juggling multiple playlists if you have more than one IPTV provider.
+- Stream interruptions or compatibility issues with your media server.
+
+Threadfin aims to make your IPTV experience seamless and more customizable.
+
+## Documentation
+
+Our comprehensive documentation covers setup, configuration, user guides, and more:
+- **[Threadfin Documentation](docs/index.md)**
+
+The original xTeVe documentation may still be a useful reference for some underlying concepts or advanced xTeVe-specific configurations not yet covered in our new guides.
 
 ### Donation
 [Github Sponsor](https://github.com/sponsors/Fyb3roptik)
